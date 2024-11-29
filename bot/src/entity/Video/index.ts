@@ -17,4 +17,10 @@ export class Video {
 
   @Column()
   name!: string;
+
+  @Column({nullable: true })
+  repetition?: string;
+
+  @Column('datetime', {nullable: true })
+  reviewedAt?: Date | null;
 }

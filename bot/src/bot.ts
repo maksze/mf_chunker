@@ -1,10 +1,11 @@
 // @ts-ignore
 // @ts-nocheck
-import "reflect-metadata"
 import { Telegraf, Context } from 'telegraf';
 import { Repository } from 'typeorm';
 import { Video } from './entity/Video';
 import { dataSource } from './shared/db'
+import { reviewCard, REVIEW_OUTCOME } from './shared/lib/reviewCard'
+import { calcNextReviewDatetime } from './shared/lib/calcNextReviewDatetime'
 
 dataSource.initialize()
   .then(async (connection) => {
@@ -14,7 +15,7 @@ dataSource.initialize()
     bot.start(async (ctx) => {
       if (ctx.message.from.id === Number(process.env.USER_ID)) {
         // Получение случайного видео из базы данных
-        const video = await videoRepository.findOne({ order: { id: 'ASC' } });
+        const video = await videoRepository.findOne({ order: { reviewedAt: 'ASC' }, where: {} });
 
         if (video) {
           // Отправка видео с вопросом и кнопками
@@ -36,16 +37,25 @@ dataSource.initialize()
     });
 
     bot.on('callback_query', async (ctx: Context) => {
-      if (ctx?.message?.from.id === Number(process.env.USER_ID)) {
-        if (ctx?.callbackQuery?.data === 'yes') {
-          // Сохранение ответа "Да" в базе данных
-          await videoRepository.save({ id: 1, answer: 'yes' });
-          await ctx.reply('Вы ответили "Да".');
-        } else if (ctx?.callbackQuery?.data === 'no') {
-          // Сохранение ответа "Нет" в базе данных
-          await videoRepository.save({ id: 1, answer: 'no' });
-          await ctx.reply('Вы ответили "Нет".');
-        }
+      if (ctx?.from.id === Number(process.env.USER_ID)) {
+        const [answer, id] = ctx?.callbackQuery?.data.split('_');
+
+        const OUTCOME = answer == 'yes'
+          ? REVIEW_OUTCOME.CORRECT
+          : REVIEW_OUTCOME.WRONG;
+
+        const video = await videoRepository.findOne({ order: { id: 'ASC' }, where: { id } });
+
+        const extra = reviewCard(OUTCOME, video.extra?.interval, video.extra?.easeFactor)
+        const reviewedAt = calcNextReviewDatetime(video.extra?.interval);
+
+        await videoRepository.update({ id }, {
+          extra,
+          reviewedAt,
+          repetition: Number(video?.repetition || 0) + 1
+        });
+
+        await ctx.reply("done");
       }
     });
 
