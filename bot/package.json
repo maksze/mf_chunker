@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env -r ts-node/register src/bot.ts",
+    "loader": "node -r ts-node/register src/loader.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

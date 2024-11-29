@@ -2,16 +2,9 @@
 // @ts-nocheck
 import "reflect-metadata"
 import { Telegraf, Context } from 'telegraf';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Video } from './entity/Video';
-
-const dataSource = new DataSource({
-  type: 'sqlite',
-  database: 'database.sqlite',
-  entities: [Video],
-  synchronize: true,
-  logging: false,
-});
+import { dataSource } from './shared/db'
 
 dataSource.initialize()
   .then(async (connection) => {
@@ -29,8 +22,8 @@ dataSource.initialize()
             caption: video.question,
             reply_markup: {
               inline_keyboard: [
-                [{ text: 'Да', callback_data: 'yes' }],
-                [{ text: 'Нет', callback_data: 'no' }],
+                [{ text: 'Да', callback_data: `yes_${video.id}` }],
+                [{ text: 'Нет', callback_data: `no_${video.id}` }],
               ],
             },
           });
