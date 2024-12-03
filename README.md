@@ -1,1 +1,6 @@
-npx @nestjs/cli new backend
+#CHUNKER
+
+Запусти для того чтобы нарезать фрагменты и переложить их в базу бота
+```
+npm run handle
+```

@@ -3,6 +3,7 @@ import * as path from 'path';
 import { Video } from './entity/Video';
 import { dataSource } from './shared/db'
 import { REVIEW_OUTCOME, reviewCard } from './shared/lib/reviewCard';
+import { calcNextReviewDatetime } from './shared/lib/calcNextReviewDatetime';
 
 interface FilePathPair {
     chunk: string;
@@ -55,19 +56,24 @@ function findChunkAndMetaFiles(rootDir: string): FilePathPair[] {
 function processFiles(files: FilePathPair[]) {
   const videoRepository = dataSource.getRepository(Video);
 
-  files.map(async file => {
+  files.map(async (file, index) => {
     // Чтение meta файла
     const metaContent = JSON.parse(fs.readFileSync(file.meta, 'utf8'));
     
     // Извлечение имени поддиректории
     const subdir = path.basename(path.dirname(file.chunk));
     
+    const extra = reviewCard(REVIEW_OUTCOME.CORRECT);
+    const reviewedAt = calcNextReviewDatetime(index);
+
     // Создание новой сущности Video
     const video = new Video();
     video.name = subdir;
     video.url = file.chunk;
     video.question = metaContent.title || '';
-    video.extra = reviewCard(REVIEW_OUTCOME.CORRECT)
+    video.extra = reviewCard(REVIEW_OUTCOME.CORRECT);
+    video.reviewedAt = reviewedAt;
+    video.repetition = "1";
 
     // Сохранение в базу данных
     try {

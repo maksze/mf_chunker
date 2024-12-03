@@ -1,6 +1,120 @@
 {
   "fragments": [
     {
+      "id": "1733132235200",
+      "title": "pitfalls",
+      "start": 5040,
+      "end": "5138"
+    },
+    {
+      "id": "1733132143259",
+      "title": "microservice",
+      "start": 4991,
+      "end": "5038"
+    },
+    {
+      "id": "1733132112774",
+      "title": "monolith",
+      "start": 4984,
+      "end": "4991"
+    },
+    {
+      "id": "1733129488786",
+      "title": "mono vs micro",
+      "start": "4946",
+      "end": "4981"
+    },
+    {
+      "id": "1733129332653",
+      "title": "advantages",
+      "start": "4762",
+      "end": "4847"
+    },
+    {
+      "id": "1733129245018",
+      "title": "FSD: app",
+      "start": "4704",
+      "end": "4721"
+    },
+    {
+      "id": "1733129180724",
+      "title": "FSD: pages",
+      "start": "4681",
+      "end": "4692"
+    },
+    {
+      "id": "1733129151755",
+      "title": "FSD: widgets",
+      "start": 4664,
+      "end": "4678"
+    },
+    {
+      "id": "1733129119877",
+      "title": "FSD: features",
+      "start": 4645,
+      "end": "4662"
+    },
+    {
+      "id": "1733129008404",
+      "title": "FSD: entity",
+      "start": "4628",
+      "end": "4644"
+    },
+    {
+      "id": "1733128914077",
+      "title": "FSD: shared",
+      "start": "4601",
+      "end": "4628"
+    },
+    {
+      "id": "1733118671230",
+      "title": "FSD",
+      "start": "4572",
+      "end": "4599"
+    },
+    {
+      "id": "1733118531335",
+      "title": "disign - folders",
+      "start": 4461,
+      "end": "4495"
+    },
+    {
+      "id": "1733118428795",
+      "title": "AD - constraint",
+      "start": "4437",
+      "end": "4460"
+    },
+    {
+      "id": "1733118392169",
+      "title": "Page",
+      "start": "4420",
+      "end": "4432"
+    },
+    {
+      "id": "1733118346362",
+      "title": "Template",
+      "start": "4415",
+      "end": "4420"
+    },
+    {
+      "id": "1733118317208",
+      "title": "Organism",
+      "start": 4408,
+      "end": "4415"
+    },
+    {
+      "id": "1733118262032",
+      "title": "Moleculus",
+      "start": "4383",
+      "end": "4406"
+    },
+    {
+      "id": "1733118214083",
+      "title": "atom",
+      "start": "4359",
+      "end": "4380"
+    },
+    {
       "id": "1732782657417",
       "title": "Atomic design",
       "start": 4335,
